@@ -38,7 +38,6 @@ rm(df_scanned_butterfly)
 rm(df_scanned_wings)
 
 # Butterflies
-
 df_butter_location <- df_butterfly %>%
   select(coreId, decimalLatitude, decimalLatitudeUpdated, decimalLongitude, decimalLongitudeUpdated) %>%
   mutate(latitude = coalesce(decimalLatitude, as.numeric(decimalLatitudeUpdated))) %>%
