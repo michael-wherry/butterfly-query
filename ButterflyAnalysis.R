@@ -89,7 +89,11 @@ mapVancouver <- map_data("world", "canada") %>%
 mapNorthAmerica <- rbind(mapUS, mapVancouver) %>%
   mutate(order = 1:n())
 
+mapUnitedKingdom <- map_data("world", c("uk", "ireland")) 
+
 df_us <- filter(df_butterfly_coordinates, country == "USA" | (country == "Canada" & latitude < 50)) 
+
+df_uk <- filter(df_butterfly_coordinates, country == "UK" | (country =="Ireland"))
 
 ggplot() +
   scale_x_continuous(limits = c(-140, -48), expand = c(0, 0), labels = NULL, breaks = NULL) +
@@ -101,14 +105,78 @@ ggplot() +
 
 
 ggplot() +
-  scale_x_continuous(expand = c(0, 0), labels = NULL, breaks = NULL) +
-  scale_y_continuous(expand = c(0, 0), labels = NULL, breaks = NULL) +
-  geom_density2d_filled(data =  df_butterfly_coordinates_us, aes(longitude, latitude, color = "red"), contour_var = "density") +
-  geom_map(data = mapNorthAmerica, map = mapNorthAmerica, aes(map_id = region), fill = NA, color = "black") +
-  geom_point(data = df_butterfly_coordinates_us, aes(longitude, latitude, size = numberOfObservations)) +
+  scale_x_continuous(expand = c(-12, 5), labels = NULL, breaks = NULL) +
+  scale_y_continuous(expand = c(65, 45), labels = NULL, breaks = NULL) +
+  geom_density2d_filled(data =  df_uk, aes(longitude, latitude, color = "red"), contour_var = "density") +
+  geom_map(data = mapUnitedKingdom, map = mapUnitedKingdom, aes(map_id = region), fill = NA, color = "black") +
+  geom_point(data = df_uk, aes(longitude, latitude, size = numberOfObservations)) +
   theme(panel.grid = element_blank(), panel.border = element_blank())
 
 
 df_butterfly_wings <- df_butterfly_known %>%
   select(lengthLW, lengthRW, widthLW, widthRW) %>%
   mutate(wingArea = rowMeans(cbind(lengthLW, lengthRW)) * rowMeans(cbind(widthLW, widthRW)))
+
+df_wing_length_scatter <- df_butterfly_traits %>%
+  select(lengthLW, lengthRW, sex) %>%
+  filter(sex == "male" | sex == "female") 
+
+length_scatterPlot <- ggplot(df_wing_scatter, aes(lengthLW, lengthRW, color = sex)) +
+  geom_point() +
+  labs( title = "Wing Length Sizes") +
+  
+
+df_wing_width_scatter <- df_butterfly_traits %>%
+  select(widthLW, widthRW, sex) %>%
+  filter(sex == "male" | sex == "female")
+
+width_scatterPlot <- ggplot(df_wing_width_scatter, aes(widthLW, widthRW, color = sex)) +
+  geom_point() +
+  labs(title = "Wing Width Sizes") +
+  coord_fixed(xlim = c(0,60), ylim = c(0,60))
+
+df_wing_apex_scatter <- df_butterfly_traits %>%
+  select(apexLW, apexRW, sex) %>%
+  filter(sex == "male" | sex == "female")
+
+apex_scatterPlot <- ggplot(df_wing_apex_scatter, aes(apexLW, apexRW, color = sex)) +
+  geom_point() +
+  labs(title = "Apex Sizes") +
+  coord_fixed(xlim = c(0,60), ylim = c(0,60))
+
+df_wing_anteriorSpot_scatter <- df_butterfly_traits %>%
+  select(anteriorSpotLW, anteriorSpotRW, sex) %>%
+  filter(sex == "male" | sex == "female")
+
+anteriorSpot_scatterPlot <- ggplot(df_wing_anteriorSpot_scatter, aes(anteriorSpotLW, anteriorSpotRW, color = sex)) +
+  geom_point() +
+  labs(title = "Anterior Spot Sizes")
+
+df_wing_posteriorSpot_scatter <- df_butterfly_traits %>%
+  select(posteriorSpotLW, posteriorSpotRW, sex) %>%
+  filter(sex == "male" | sex == "female")
+
+posteriorSpot_scatterPlot <- ggplot(df_wing_posteriorSpot_scatter, aes(posteriorSpotLW, posteriorSpotRW, color = sex)) +
+  geom_point() +
+  labs(title = "Posterior Spot Sizes")
+
+plot(length_scatterPlot + width_scatterPlot + apex_scatterPlot +
+       anteriorSpot_scatterPlot +
+       posteriorSpot_scatterPlot +
+       plot_layout(ncol = 3)) +
+       plot_annotation("Butterfly Measurements by Gender")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
