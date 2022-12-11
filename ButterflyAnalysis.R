@@ -121,10 +121,10 @@ df_wing_length_scatter <- df_butterfly_traits %>%
   select(lengthLW, lengthRW, sex) %>%
   filter(sex == "male" | sex == "female") 
 
-length_scatterPlot <- ggplot(df_wing_scatter, aes(lengthLW, lengthRW, color = sex)) +
+length_scatterPlot <- ggplot(df_wing_length_scatter, aes(lengthLW, lengthRW, color = sex)) +
   geom_point() +
   labs( title = "Wing Length Sizes") +
-  
+  coord_fixed(xlim = c(0,60), ylim = c(0,60))
 
 df_wing_width_scatter <- df_butterfly_traits %>%
   select(widthLW, widthRW, sex) %>%
