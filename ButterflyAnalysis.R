@@ -114,7 +114,7 @@ ggplot() +
 
 
 df_butterfly_wings <- df_butterfly_known %>%
-  select(lengthLW, lengthRW, widthLW, widthRW) %>%
+  select(lengthLW, lengthRW, widthLW, widthRW, sex) %>%
   mutate(wingArea = rowMeans(cbind(lengthLW, lengthRW)) * rowMeans(cbind(widthLW, widthRW)))
 
 df_wing_length_scatter <- df_butterfly_traits %>%
@@ -166,7 +166,9 @@ plot(length_scatterPlot + width_scatterPlot + apex_scatterPlot +
        plot_layout(ncol = 3)) +
        plot_annotation("Butterfly Measurements by Gender")
 
-
+# t test to see if wing length has any discernable impact
+# on gender
+t.test(df_butterfly_wings$wingArea ~ df_butterfly_wings$sex)
 
 
 
