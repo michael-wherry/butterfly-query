@@ -5,7 +5,7 @@ An R query built upon a dataset of butterflies collected by several different co
 An analysis of the clean data from ButterflyQuery.R, complete with visualizations and a t-test
 
 # Questions we asked of our data
-**1) How do measurements differ based on sex? **
+**1) How do measurements differ based on sex?**
 * To test this we created multiple scatterplots using ggplot2 and patchwork
 ``` r
 plot(length_scatterPlot + width_scatterPlot + apex_scatterPlot +
@@ -47,7 +47,7 @@ Resulting Image
 * Wing apex and posterior spots are the largest indicators of sex amongst cabbage butterflies
 * The confusion matrices show that our decision tree is extremely accurate in its predicitons of sex
 
-**3) Where were these butterflies gathered? **
+**3) Where were these butterflies gathered?**
 * To test this we used a geospatial map of the US and UK and overlayed geom_density2d from  ggplot2 on top
 
 ``` r
@@ -70,13 +70,13 @@ ggplot() +
   
   Resulting Image
   
-  <img src="images/USA geosptial.png" alt="USA Geospatial Visual" width="600" height="300">
+  <img src="images/USA geospatial.png" alt="USA Geospatial Visual" width="600" height="300">
   <img src="images/UK geospatial.png" alt="UK Geospatial Visual" width="600" height="300">
   
   * We see the greatest density of butterflies in the US were found in Virginia, West Virginia, and Maryland
   * We see the geratest density of butterflies in the UK were found in London
   
-  #T-Test
+  # T-Test
   * We wanted to see if wing areas (wing lengths * wing widths) were dependent of sex
   * We used a Welch two-sample T-test which returned **t = -0.4301, df = 742.64, p-value = 0.6672**
     alternative hypothesis: true difference in means between group female and group male is not equal to 0
