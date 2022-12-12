@@ -105,9 +105,9 @@ ggplot() +
 
 
 ggplot() +
-  scale_x_continuous(expand = c(-12, 5), labels = NULL, breaks = NULL) +
-  scale_y_continuous(expand = c(65, 45), labels = NULL, breaks = NULL) +
-  geom_density2d_filled(data =  df_uk, aes(longitude, latitude, color = "red"), contour_var = "density") +
+  scale_x_continuous(limits = c(-12, 5), expand = c(0, 0), labels = NULL, breaks = NULL) +
+  scale_y_continuous(limits = c(49, 60), expand = c(0, 0), labels = NULL, breaks = NULL) +
+  geom_density2d_filled(data =  df_uk, aes(longitude, latitude, color = "red"), contour_var = "ndensity", bins = 15, adjust = 2) +
   geom_map(data = mapUnitedKingdom, map = mapUnitedKingdom, aes(map_id = region), fill = NA, color = "black") +
   geom_point(data = df_uk, aes(longitude, latitude, size = numberOfObservations)) +
   theme(panel.grid = element_blank(), panel.border = element_blank())
